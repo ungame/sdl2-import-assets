@@ -1,0 +1,49 @@
+{
+    "spritesheet": {
+        "width": 800,
+        "height": 240,
+        "animations": [
+            {
+                "name": "idle",
+                "frames": [
+                    {
+                        "index": 0,
+                        "start": { "x": 39, "y": 32 },
+                        "width": 20,
+                        "height": 46
+                    },
+                    {
+                        "index": 1,
+                        "start": { "x": 139, "y": 33 },
+                        "width": 20,
+                        "height": 45
+                    },
+                    {
+                        "index": 2,
+                        "start": { "x": 239, "y": 33 },
+                        "width": 20,
+                        "height": 45
+                    },
+                    {
+                        "index": 3,
+                        "start": { "x": 339, "y": 33 },
+                        "width": 20,
+                        "height": 45
+                    },
+                    {
+                        "index": 4,
+                        "start": { "x": 439, "y": 32 },
+                        "width": 20,
+                        "height": 46
+                    },
+                    {
+                        "index": 5,
+                        "start": { "x": 539, "y": 32 },
+                        "width": 20,
+                        "height": 46
+                    }
+                ]
+            }
+        ]
+    }
+}
