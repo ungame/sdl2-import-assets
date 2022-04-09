@@ -116,11 +116,7 @@ int main(int argc, char* argv[])
     delete player;
     delete asset;
 
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-
-    IMG_Quit();
-    SDL_Quit();
+    safeQuit(window, renderer);
 
     return EXIT_SUCCESS;
 }
@@ -148,8 +144,8 @@ void safeQuit(SDL_Window* window, SDL_Renderer* renderer)
     if(renderer != nullptr)
         SDL_DestroyRenderer(renderer);
 
-    if(window == nullptr)
-        SDL_DestroyRenderer(renderer);
+    if(window != nullptr)
+        SDL_DestroyWindow(window);
 
     IMG_Quit();
     SDL_Quit();
