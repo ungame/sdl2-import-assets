@@ -33,8 +33,8 @@ void Animation::next()
 
     double elapsed = Time::Since(_frameStarted);
 
-        SDL_Log("Animation: Name=%s, CurrentFrame=%d, Elapsed=%lf, Repeat=%s, CompletedAnimations=%d", _name.c_str(), 
-        _currentFrame, elapsed, _repeat ? "True" : "False", _completedAnimations);
+    // SDL_Log("Animation: Name=%s, CurrentFrame=%d, Elapsed=%lf, Repeat=%s, CompletedAnimations=%d", _name.c_str(), 
+    // _currentFrame, elapsed, _repeat ? "True" : "False", _completedAnimations);
 
     if(elapsed < _frameInterval)
         return;

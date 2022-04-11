@@ -1,0 +1,136 @@
+{
+    "player": {
+        "width": 800,
+        "height": 240,
+        "animations": [
+            {
+                "name": "idle",
+                "frames": [
+                    {
+                        "index": 0,
+                        "start": { "x": 39, "y": 32 },
+                        "width": 20,
+                        "height": 46
+                    },
+                    {
+                        "index": 1,
+                        "start": { "x": 139, "y": 33 },
+                        "width": 20,
+                        "height": 45
+                    },
+                    {
+                        "index": 2,
+                        "start": { "x": 239, "y": 33 },
+                        "width": 20,
+                        "height": 45
+                    },
+                    {
+                        "index": 3,
+                        "start": { "x": 339, "y": 33 },
+                        "width": 20,
+                        "height": 45
+                    },
+                    {
+                        "index": 4,
+                        "start": { "x": 439, "y": 32 },
+                        "width": 20,
+                        "height": 46
+                    },
+                    {
+                        "index": 5,
+                        "start": { "x": 539, "y": 32 },
+                        "width": 20,
+                        "height": 46
+                    }
+                ]
+            },
+            {
+                "name": "start_run",
+                "frames": [
+                    {
+                        "index": 0,
+                        "start": { "x": 640, "y": 32 },
+                        "width": 19,
+                        "height": 46
+                    },
+                    {
+                        "index": 1,
+                        "start": { "x": 741, "y": 31 },
+                        "width": 22,
+                        "height": 47
+                    }
+                ]
+            },
+            {
+                "name": "run",
+                "frames": [
+                    {
+                        "index": 0,
+                        "start": { "x": 33, "y": 111 },
+                        "width": 38,
+                        "height": 47
+                    },
+                    {
+                        "index": 1,
+                        "start": { "x": 132, "y": 111 },
+                        "width": 40,
+                        "height": 46
+                    },
+                    {
+                        "index": 2,
+                        "start": { "x": 234, "y": 113 },
+                        "width": 38,
+                        "height": 45
+                    },
+                    {
+                        "index": 3,
+                        "start": { "x": 338, "y": 114 },
+                        "width": 28,
+                        "height": 44
+                    },
+                    {
+                        "index": 4,
+                        "start": { "x": 432, "y": 114 },
+                        "width": 38,
+                        "height": 44
+                    },
+                    {
+                        "index": 5,
+                        "start": { "x": 530, "y": 114 },
+                        "width": 39,
+                        "height": 43
+                    },
+                    {
+                        "index": 6,
+                        "start": { "x": 634, "y": 113 },
+                        "width": 32,
+                        "height": 45
+                    },
+                    {
+                        "index": 7,
+                        "start": { "x": 739, "y": 113 },
+                        "width": 31,
+                        "height": 45
+                    }
+                ]
+            },
+            {
+                "name": "stop_run",
+                "frames": [
+                    {
+                        "index": 0,
+                        "start": { "x": 40, "y": 194 },
+                        "width": 19,
+                        "height": 44
+                    },
+                    {
+                        "index": 1,
+                        "start": { "x": 137, "y": 193 },
+                        "width": 23,
+                        "height": 45
+                    }
+                ]
+            }
+        ]
+    }
+}

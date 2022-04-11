@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    Player* player = new Player(asset, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 3);
+    Player* player = new Player(asset, SCREEN_WIDTH / 2, SCREEN_HEIGHT, 3);
 
 
     float lastFrame = SDL_GetTicks64();

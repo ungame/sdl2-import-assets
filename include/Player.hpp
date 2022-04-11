@@ -25,6 +25,8 @@ class Player
         ~Player();
         void Update();
         void Draw(SDL_Renderer* renderer);
+        SDL_Rect GetRect();
+        void HandleCollisions();
 };
 
 #endif
