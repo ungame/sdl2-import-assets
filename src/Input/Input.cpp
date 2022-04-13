@@ -3,6 +3,12 @@
 
 Input* Input::_input = nullptr;
 
+Input::Input()
+{
+    _keyboard = SDL_GetKeyboardState(nullptr);
+    _cursor = { 0, 0 };
+}
+
 bool Input::Listen()
 {
     SDL_Event event;

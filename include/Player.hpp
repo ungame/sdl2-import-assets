@@ -21,6 +21,7 @@ class Player
         SDL_RendererFlip _flip;
         std::map<std::string, Animation*> _animations;
         std::string _currentAnimation;
+        bool _onGround;
 
     public:
         Player(Asset* asset, float x, float y, int scale = 1);

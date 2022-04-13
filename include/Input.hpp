@@ -11,7 +11,7 @@ class Input
         SDL_Point _cursor;
 
     private:
-        Input() { _keyboard = SDL_GetKeyboardState(nullptr); }
+        Input();
 
     public:
         inline static Input* Instance() { return _input = _input != nullptr ? _input : new Input(); }

@@ -15,6 +15,7 @@ Player::Player(Asset* asset, float x, float y, int scale)
     _direction = { 0, 0 };
     _scale = scale;
     _flip = SDL_FLIP_NONE;
+    _onGround = false;
 
     SpriteSheet* idleSprites = new SpriteSheet();
     idleSprites->Add(SDL_Rect{39, 32, 20, 46});
@@ -54,6 +55,21 @@ Player::Player(Asset* asset, float x, float y, int scale)
 
     Animation* stopRun = new Animation("stop_run", stopRunSprites, 0.1, false);
     _animations[stopRun->GetName()] = stopRun;
+
+    SpriteSheet* jumpSprites = new SpriteSheet();
+    jumpSprites->Add(SDL_Rect{338, 192, 23, 46});
+    jumpSprites->Add(SDL_Rect{437, 192, 25, 44});
+    jumpSprites->Add(SDL_Rect{536, 192, 26, 41});
+
+    Animation* jump = new Animation("jump", jumpSprites, 0.1, false);
+    _animations[jump->GetName()] = jump;
+
+    SpriteSheet* fallSprites = new SpriteSheet();
+    fallSprites->Add(SDL_Rect{634, 192, 28, 42});
+    fallSprites->Add(SDL_Rect{733, 193, 30, 45});
+
+    Animation* fall = new Animation("fall", fallSprites, 0.1, false);
+    _animations[fall->GetName()] = fall;
 }
 
 void Player::Update()
@@ -71,6 +87,9 @@ void Player::Update()
         _direction.x = -1;
         _flip = SDL_FLIP_HORIZONTAL;
     }
+
+    if(Input::Instance()->KeyPressed(SDL_SCANCODE_SPACE))
+        _direction.y = JUMP_FORCE;
 
     if(Input::Instance()->KeyPressed(SDL_SCANCODE_1))
     {
@@ -94,6 +113,18 @@ void Player::Update()
     {
         _animations[_currentAnimation]->Reset();
         _currentAnimation = "stop_run";
+    }
+
+    if(Input::Instance()->KeyPressed(SDL_SCANCODE_5))
+    {
+        _animations[_currentAnimation]->Reset();
+        _currentAnimation = "jump";
+    }
+
+    if(Input::Instance()->KeyPressed(SDL_SCANCODE_6))
+    {
+        _animations[_currentAnimation]->Reset();
+        _currentAnimation = "fall";
     }
 
     _position.x += _direction.x * PLAYER_SPEED;
@@ -131,7 +162,7 @@ void Player::HandleCollisions()
 {
     SDL_Rect rect = GetRect();
 
-    SDL_Log("Player: X=%d, Y=%d, W=%d, H=%d", rect.x, rect.y, rect.w, rect.h);
+    SDL_Log("Player: X=%d, Y=%d, W=%d, H=%d, OnGround=%s", rect.x, rect.y, rect.w, rect.h, _onGround ? "True" : "False");
 
     if(rect.x < 0)
     {
@@ -149,7 +180,17 @@ void Player::HandleCollisions()
     {
         _position.y = SCREEN_HEIGHT;
         _direction.y = 0;
+        _onGround = true;
     }
+
+    if(rect.y < 0)
+    {
+        _position.y = rect.h;
+        _direction.y = 0;
+    }
+
+    if((_onGround && _direction.y < 0) || _direction.y > 1)
+        _onGround = false;
 }
 
 void Player::ApplyGravity()

@@ -5,11 +5,11 @@
 #include "SpriteSheet.hpp"
 #include "Asset.hpp"
 
-Animation::Animation(std::string name, SpriteSheet* sprites, double frameInterval, bool repeat)
+Animation::Animation(std::string name, SpriteSheet* sprites, double frameDuration, bool repeat)
 {
     _name = name;
     _sprites = sprites;
-    _frameInterval = frameInterval;
+    _frameDuration = frameDuration;
     _repeat = repeat;
     _currentFrame = 0;
     _frameStarted = nullptr;
@@ -36,7 +36,7 @@ void Animation::next()
     // SDL_Log("Animation: Name=%s, CurrentFrame=%d, Elapsed=%lf, Repeat=%s, CompletedAnimations=%d", _name.c_str(), 
     // _currentFrame, elapsed, _repeat ? "True" : "False", _completedAnimations);
 
-    if(elapsed < _frameInterval)
+    if(elapsed < _frameDuration)
         return;
 
     if(_currentFrame >= _sprites->Len() - 1)

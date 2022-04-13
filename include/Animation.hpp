@@ -11,14 +11,14 @@ class Animation
         std::string _name;
         SpriteSheet* _sprites;
         int _currentFrame;
-        double _frameInterval;
+        double _frameDuration;
         Time* _frameStarted;
         bool _started;
         bool _repeat;
         int _completedAnimations;
 
     public:
-        Animation(std::string name, SpriteSheet* sprites, double frameInterval, bool repeat = true);
+        Animation(std::string name, SpriteSheet* sprites, double frameDuration, bool repeat = true);
         ~Animation();
         void Animate();
         void Reset();
