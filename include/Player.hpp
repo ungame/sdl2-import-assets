@@ -8,6 +8,8 @@
 #include "Asset.hpp"
 
 #define PLAYER_SPEED 8.0F
+#define JUMP_FORCE -16.0F
+#define GRAVITY 0.8F
 
 class Player
 {
@@ -27,6 +29,7 @@ class Player
         void Draw(SDL_Renderer* renderer);
         SDL_Rect GetRect();
         void HandleCollisions();
+        void ApplyGravity();
 };
 
 #endif

@@ -98,6 +98,7 @@ void Player::Update()
 
     _position.x += _direction.x * PLAYER_SPEED;
 
+    ApplyGravity();
     HandleCollisions();
 
     _animations[_currentAnimation]->Animate();
@@ -130,14 +131,31 @@ void Player::HandleCollisions()
 {
     SDL_Rect rect = GetRect();
 
+    SDL_Log("Player: X=%d, Y=%d, W=%d, H=%d", rect.x, rect.y, rect.w, rect.h);
+
     if(rect.x < 0)
+    {
         _position.x = rect.w;
+        _direction.x = 0;
+    }
 
     if(rect.x + rect.w > SCREEN_WIDTH)
+    {
         _position.x = SCREEN_WIDTH;
+        _direction.x = 0;
+    }
 
-    if(rect.y > SCREEN_HEIGHT)
+    if(rect.y + rect.h > SCREEN_HEIGHT)
+    {
         _position.y = SCREEN_HEIGHT;
+        _direction.y = 0;
+    }
+}
+
+void Player::ApplyGravity()
+{
+    _direction.y += GRAVITY;
+    _position.y += _direction.y;
 }
 
 Player::~Player()
