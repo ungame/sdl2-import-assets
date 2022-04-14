@@ -162,7 +162,7 @@ void Player::HandleCollisions()
 {
     SDL_Rect rect = GetRect();
 
-    SDL_Log("Player: X=%d, Y=%d, W=%d, H=%d, OnGround=%s", rect.x, rect.y, rect.w, rect.h, _onGround ? "True" : "False");
+    // SDL_Log("Player: X=%d, Y=%d, W=%d, H=%d, OnGround=%s", rect.x, rect.y, rect.w, rect.h, _onGround ? "True" : "False");
 
     if(rect.x < 0)
     {

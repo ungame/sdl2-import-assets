@@ -9,6 +9,7 @@
 #include "SpriteSheet.hpp"
 #include "Animation.hpp"
 #include "Player.hpp"
+#include "Particle.hpp"
 
 #define FPS 1000 / 60
 
@@ -16,6 +17,10 @@ const char* WINDOW_TITLE = "SDL2 IMPORT ASSETS";
 
 void setWindowTitle(SDL_Window* window);
 void safeQuit(SDL_Window* window, SDL_Renderer* renderer);
+
+Particle* DustOnStopRun(Asset* asset);
+Particle* DustOnJump(Asset* asset);
+Particle* DustOnGround(Asset* asset);
 
 int main(int argc, char* argv[])
 {
@@ -61,21 +66,37 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    Asset* asset = new Asset(renderer, "assets/PrototypeHero.png");
+    Asset* playerAsset = new Asset(renderer, "assets/PrototypeHero.png");
 
-    if(asset->HasError())
+    if(playerAsset->HasError())
     {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "asset error: %s", asset->GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "player asset error: %s", playerAsset->GetError());
 
-        delete asset;
+        delete playerAsset;
 
         safeQuit(window, renderer);
 
         return EXIT_FAILURE;
     }
 
-    Player* player = new Player(asset, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 3);
+    Player* player = new Player(playerAsset, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 3);
 
+    Asset* dustAsset = new Asset(renderer, "assets/Dust.png");
+
+    if(dustAsset->HasError())
+    {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "dust asset error: %s", dustAsset->GetError());
+
+        delete dustAsset;
+
+        safeQuit(window, renderer);
+
+        return EXIT_FAILURE;
+    }
+
+    Particle* dustOnStopRun = DustOnStopRun(dustAsset);
+    Particle* dustOnJump = DustOnJump(dustAsset);
+    Particle* dustOnGround = DustOnGround(dustAsset);
 
     float lastFrame = SDL_GetTicks64();
     float frameTime = SDL_GetTicks64() - lastFrame;
@@ -97,11 +118,45 @@ int main(int argc, char* argv[])
         player->Update();
         player->Draw(renderer);
 
-        if(asset->HasError())
+        if(playerAsset->HasError())
         {
-            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "error on draw: %s", asset->GetError());
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "error on draw player: %s", playerAsset->GetError());
 
             break;
+        }
+
+        dustOnStopRun->Update();
+        dustOnStopRun->Draw(renderer);
+
+        dustOnJump->Update();
+        dustOnJump->Draw(renderer);
+
+        dustOnGround->Update();
+        dustOnGround->Draw(renderer);
+
+        if(dustAsset->HasError())
+        {
+           SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "error on draw dust: %s", dustAsset->GetError());
+
+            break;
+        }
+
+        if(dustOnStopRun->IsFinished())
+        {
+            delete dustOnStopRun;
+            dustOnStopRun = DustOnStopRun(dustAsset);
+        }
+
+        if(dustOnJump->IsFinished())
+        {
+            delete dustOnJump;
+            dustOnJump = DustOnJump(dustAsset);
+        }
+
+        if(dustOnGround->IsFinished())
+        {
+            delete dustOnGround;
+            dustOnGround = DustOnGround(dustAsset);
         }
         
         SDL_RenderPresent(renderer);
@@ -113,8 +168,10 @@ int main(int argc, char* argv[])
             SDL_Delay(FPS - frameTime);
     }
 
+    delete dustOnStopRun;
+    delete dustAsset;
     delete player;
-    delete asset;
+    delete playerAsset;
 
     safeQuit(window, renderer);
 
@@ -149,4 +206,42 @@ void safeQuit(SDL_Window* window, SDL_Renderer* renderer)
 
     IMG_Quit();
     SDL_Quit();
+}
+
+Particle* DustOnStopRun(Asset* asset)
+{
+    SpriteSheet* sprites = new SpriteSheet();
+    sprites->Add(SDL_Rect{13, 24, 8, 6});
+    sprites->Add(SDL_Rect{47, 23, 7, 5});
+    sprites->Add(SDL_Rect{80, 23, 6, 4});
+    sprites->Add(SDL_Rect{113, 23, 2, 3});
+
+    Particle* particle = new Particle(asset, sprites, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.3, 5);
+    
+    return particle;
+}
+
+Particle* DustOnJump(Asset* asset)
+{
+    SpriteSheet* sprites = new SpriteSheet();
+    sprites->Add(SDL_Rect{9, 52, 9, 10});
+    sprites->Add(SDL_Rect{42, 50, 16, 9});
+    sprites->Add(SDL_Rect{75, 48, 5, 9});
+
+    Particle* particle = new Particle(asset, sprites, SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2, 0.3, 5);
+    
+    return particle;
+}
+
+Particle* DustOnGround(Asset* asset)
+{
+    SpriteSheet* sprites = new SpriteSheet();
+    sprites->Add(SDL_Rect{4, 88, 26, 6});
+    sprites->Add(SDL_Rect{32, 86, 31, 8});
+    sprites->Add(SDL_Rect{64, 86, 31, 8});
+    sprites->Add(SDL_Rect{96, 86, 31, 6});
+
+    Particle* particle = new Particle(asset, sprites, SCREEN_WIDTH - (SCREEN_WIDTH / 3), SCREEN_HEIGHT / 2, 0.3, 5);
+    
+    return particle;
 }

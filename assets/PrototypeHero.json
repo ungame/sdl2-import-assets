@@ -1,5 +1,5 @@
 {
-    "player": {
+    "prototype_hero": {
         "filename": "PrototypeHero.png",
         "width": 800,
         "height": 240,
